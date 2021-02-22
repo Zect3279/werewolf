@@ -1,11 +1,12 @@
 import discord
 from discord.ext import commands
+import asyncio
 
 from lib.player import Players
 from lib.setting import Set
 from lib.instant import Instant
 
-from roles.observe import Observe
+from roles.observe import Observe, Werewolf, Fortun
 from roles.whiling import Willing
 
 
@@ -13,12 +14,13 @@ from roles.whiling import Willing
 class Start(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.role_list = []
         self.player = Players()
         self.set = Set(bot)
         self.instant = Instant(bot)
         self.observe = Observe(bot)
-        self.wolf = self.observe.wolf
-        self.fortun = self.observe.fortun
+        self.wolf = Werewolf(bot)
+        self.fortun = Fortun(bot)
         self.whilling = Willing(bot)
 
 
@@ -33,16 +35,29 @@ class Start(commands.Cog):
         await self.channel()
         await self.every()
         await self.call()
-        role_list = self.ro_li()
+        await self.ro_li()
+        await self.check()
+
+    async def check(self):
+        print("check")
         await asyncio.gather(
-        self.wolf.check(role_list),
-        self.fortun.check(role_list),
+        self.wolf.check(self.role_list),
+        self.fortun.check(self.role_list),
         )
-        await whilling.wait()
+        await self.wil()
+
+    async def wil(self):
+        print("while")
+        await self.whilling.wait()
+        await self.mo()
+
+    async def mo(self):
+        print("move")
         await asyncio.gather(
         self.wolf.move(),
         self.fortun.move(),
         )
+        print("Finish")
 
 
     async def move(self):
@@ -56,11 +71,12 @@ class Start(commands.Cog):
 
     async def channel(self):
         for p in self.bot.system.players:
-            role = p.role
             mem = self.bot.system.guild.get_member(p.id)
             role = await self.bot.system.guild.create_role(name=mem.name)
-            chan = discord.utils.get(self.bot.system.guild.text_channels, name=role)
-            print(chan)
+            if p.role == "市民":
+                await mem.add_roles(role)
+                continue
+            chan = discord.utils.get(self.bot.system.guild.text_channels, name=p.role)
             await chan.set_permissions(role,read_messages=True)
             await mem.add_roles(role)
 
@@ -73,11 +89,10 @@ class Start(commands.Cog):
         for p in self.bot.system.players:
             if p.role == "市民":
                 continue
-            channel = discord.utils.get(self.bot.system.guild.text_channels, name=role)
-            await channel.send(f"<@{id}> あなたは、 __{role}__ です。")
+            channel = discord.utils.get(self.bot.system.guild.text_channels, name=p.role)
+            await channel.send(f"<@{p.id}> あなたは、 __{p.role}__ です。")
 
     async def ro_li(self):
-        role_list = []
         for p in self.bot.system.player.live:
-            role_list.append(p.role)
-        return role_list
+            self.role_list.append(p.role)
+        print(self.role_list)

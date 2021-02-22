@@ -38,7 +38,6 @@ class Players():
         role_list = random.sample(role, n)
         for i, p in enumerate(player_list):
             p.role = role_list[i]
-            print(p.role)
 
     def make_data(self,player_list):
         data_list = []

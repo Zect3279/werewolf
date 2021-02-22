@@ -21,7 +21,7 @@ extensions = [
     "cogs.game",
     "cogs.controll",
     "cogs.vc",
-    "cogs.observe"
+    "roles.observe"
 ]
 for extension in extensions:
     bot.load_extension(extension)

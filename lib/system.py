@@ -8,11 +8,14 @@ class System():
     def __init__(self):
         self.status = "nothing"
         self.on = False
+        self.move_wait = False
         self.players = []
         self.guild = None
         self.channel = Channels()
         self.role = Roles()
         self.player = Player()
+        self.wolf = Wolf()
+        self.fortun = Fortun()
 
 
 class Channels():
@@ -28,3 +31,15 @@ class Roles():
 class Player():
     def __init__(self):
         self.yes = "no"
+
+class Wolf():
+    def __init__(self):
+        self.can_move = False
+        self.can_move = False
+        self.flag = None
+
+class Fortun():
+    def __init__(self):
+        self.can_move = False
+        self.can_move = False
+        self.flag = None

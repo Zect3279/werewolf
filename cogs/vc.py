@@ -8,7 +8,7 @@ class VC(commands.Cog):
 
     @commands.Cog.listener()
     async def on_voice_state_update(self,member,before,after):
-        if self.on == False:
+        if self.bot.system.on == False:
             return
         if before.channel == after.channel:
             return

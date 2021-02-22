@@ -10,40 +10,40 @@ class Observe(commands.Cog):
 
     @commands.Cog.listener()
     async def on_reaction_add(self,reaction,user):
-        print("called")
+        if self.bot.system.move_wait == False:
+            return
         u_id = user.id
         id_list = []
         for p in self.bot.system.players:
             id_list.append(p.id)
         if u_id not in id_list:
-            print("role return")
             return
         for p in self.bot.system.players:
             if p.role == "人狼":
                 print("wolf")
-                if self.wolf.can_move == True:
+                if self.bot.system.wolf.can_move == True:
                     return
-                self.wolf.can_move = False
+                self.bot.system.wolf.can_move = False
                 if str(reaction.emoji) == '🇦':
-                    await self.channel_wolf.send(f"誰も殺害しませんでした。")
-                    self.wolf.flag = None
+                    await self.bot.system.channel.wolf.send(f"誰も殺害しませんでした。")
+                    self.bot.system.wolf.flag = None
                     return
                 else:
                     await self.bot.system.channel.wolf.send(f"<@{user.id}> を殺害します。")
-                    self.wolf.flag = user
+                    self.bot.system.wolf.flag = user
                     return
             if p.role == "占い師":
                 print("fortun")
-                if self.fortun.can_move == True:
+                if self.bot.system.fortun.can_move == True:
                     return
-                self.fortun.can_move = False
+                self.bot.system.fortun.can_move = False
                 if str(reaction.emoji) == '🇦':
-                    await self.channel_fortun.send(f"誰も占いませんでした。")
-                    self.fortun.flag = None
+                    await self.bot.system.channel.fortun.send(f"誰も占いませんでした。")
+                    self.bot.system.fortun.flag = None
                     return
                 else:
                     await self.bot.system.channel.fortun.send(f"<@{user.id}> を占います。")
-                    self.fortun.flag = user
+                    self.bot.system.fortun.flag = user
                     return
 
 
@@ -61,32 +61,31 @@ class Observe(commands.Cog):
             await msg.add_reaction(self.ment[i])
 
 
-
-
-
-class Werewolf():
+class Werewolf(Observe):
     def __init__(self,bot):
         self.bot = bot
         self.count = ["B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T"]
         self.ment = ["🇧","🇨","🇩","🇪","🇫","🇬","🇭","🇮","🇯","🇰","🇱","🇲","🇳","🇴","🇵","🇶","🇷","🇸","🇹",]
-        self.can_move = False
-        self.flag = None
 
     async def check(self,roles):
-        if "人狼" not in role:
+        if "人狼" not in roles:
             print("not wolf")
+            self.bot.system.wolf.can_move = False
             return
-        self.can_move = True
-        await self.observe.box(self.bot.system.channel.wolf,"殺害する人を選択してください。")
+        self.bot.system.can_move = True
+        print("yes wolf")
+        await super().box(self.bot.system.channel.wolf,"殺害する人を選択してください。")
 
 
     async def move(self):
-        mem = self.flag
+        mem = self.bot.system.wolf.flag
         print("kill")
         if mem == None:
+            print("mem==none")
             return
         for p in self.bot.system.player.live:
             if p.id != mem.id:
+                print("p.id!=mem.id")
                 continue
             self.bot.system.player.live.remove(p)
             self.bot.system.player.dead.append(p)
@@ -95,35 +94,38 @@ class Werewolf():
         await self.channel.wolf.send(f"<@{mem.id}> の殺害が完了しました。")
 
 
-class Fortun():
+class Fortun(Observe):
     def __init__(self,bot):
         self.bot = bot
         self.count = ["B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T"]
         self.ment = ["🇧","🇨","🇩","🇪","🇫","🇬","🇭","🇮","🇯","🇰","🇱","🇲","🇳","🇴","🇵","🇶","🇷","🇸","🇹",]
-        self.can_move = False
-        self.flag = None
 
-    async def fortun(self,role):
-        if "占い師" not in role:
+    async def check(self,roles):
+        if "占い師" not in roles:
             print("not fortun")
+            self.bot.system.fortun.can_move = False
             return
-        self.can_move = True
-        await self.observe.box(self.channel_fortun,"占う人を選択してください。")
+        self.bot.system.can_move = True
+        print("yes fortun")
+        await super().box(self.bot.system.channel.fortun,"占う人を選択してください。")
 
 
     async def move(self):
-        mem = self.flag
+        mem = self.bot.system.fortun.flag
         print("look")
         if mem == None:
+            print("mem==none")
             return
         for p in self.bot.system.player.live:
             if p.id != mem.id:
+                print("p.id!=mem.id")
                 continue
             if p.role == "人狼":
                 bw = "黒"
             else:
                 bw = "白"
             await self.channel.fortun.send(f"<@{mem.id}> は __{bw}__ です")
+
 
 def setup(bot):
     bot.add_cog(Observe(bot))
