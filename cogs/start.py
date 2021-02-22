@@ -36,22 +36,14 @@ class Start(commands.Cog):
         await self.every()
         await self.call()
         await self.ro_li()
-        await self.check()
-
-    async def check(self):
+        role_list = self.role_list
         print("check")
         await asyncio.gather(
-        self.wolf.check(self.role_list),
-        self.fortun.check(self.role_list),
+        self.wolf.check(role_list),
+        self.fortun.check(role_list),
         )
-        await self.wil()
-
-    async def wil(self):
         print("while")
         await self.whilling.wait()
-        await self.mo()
-
-    async def mo(self):
         print("move")
         await asyncio.gather(
         self.wolf.move(),

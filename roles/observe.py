@@ -72,7 +72,7 @@ class Werewolf(Observe):
             print("not wolf")
             self.bot.system.wolf.can_move = False
             return
-        self.bot.system.can_move = True
+        self.bot.system.wolf.can_move = True
         print("yes wolf")
         await super().box(self.bot.system.channel.wolf,"殺害する人を選択してください。")
 
@@ -105,7 +105,7 @@ class Fortun(Observe):
             print("not fortun")
             self.bot.system.fortun.can_move = False
             return
-        self.bot.system.can_move = True
+        self.bot.system.fortun.can_move = True
         print("yes fortun")
         await super().box(self.bot.system.channel.fortun,"占う人を選択してください。")
 
