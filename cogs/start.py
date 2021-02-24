@@ -7,7 +7,7 @@ from lib.setting import Set
 from lib.instant import Instant
 
 from roles.observe import Observe, Werewolf, Fortun
-from roles.whiling import Willing
+# from roles.whiling import Willing
 
 
 
@@ -21,7 +21,7 @@ class Start(commands.Cog):
         self.observe = Observe(bot)
         self.wolf = Werewolf(bot)
         self.fortun = Fortun(bot)
-        self.whilling = Willing(bot)
+        # self.whilling = Willing(bot)
 
 
     async def deploy(self,ctx,players):
@@ -43,7 +43,9 @@ class Start(commands.Cog):
         self.fortun.check(role_list),
         )
         print("while")
-        await self.whilling.wait()
+        await self.observe.wait()
+
+    async def mo(self):
         print("move")
         await asyncio.gather(
         self.wolf.move(),

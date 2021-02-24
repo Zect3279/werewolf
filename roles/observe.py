@@ -46,6 +46,18 @@ class Observe(commands.Cog):
                     self.bot.system.fortun.flag = user
                     return
 
+    async def wait(self):
+        self.bot.system.move_wait = True
+        print("loop start")
+        while self.bot.system.move_wait == True:
+            try:
+                reaction, user = await self.bot.wait_for('reaction_add', timeout=settime, check=check)
+            except asyncio.TimeoutError:
+                await ctx.send('残念、人が足りなかったようだ...')
+                break
+            else:
+                if str(reaction.emoji) == '⏫':
+
 
     async def box(self,chan,title):
         txt = "A. 誰も選択しない"
