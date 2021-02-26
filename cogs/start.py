@@ -43,14 +43,30 @@ class Start(commands.Cog):
         self.fortun.check(role_list),
         )
         print("while")
-        await self.observe.wait()
+        await self.Await()
+
+    async def Await(self):
+        await asyncio.sleep(1)
+        if self.bot.system.wolf.can_move == True:
+            await self.Bwait()
+        if self.bot.system.fortun.can_move == True:
+            await self.Bwait()
+
+        await self.mo()
+
+    async def Bwait(self):
+        await asyncio.sleep(1)
+        if self.bot.system.wolf.can_move == True:
+            await self.Await()
+        if self.bot.system.fortun.can_move == True:
+            await self.Await()
+
+        await self.mo()
 
     async def mo(self):
         print("move")
-        await asyncio.gather(
-        self.wolf.move(),
-        self.fortun.move(),
-        )
+        await self.wolf.move()
+        await self.fortun.move()
         print("Finish")
 
 

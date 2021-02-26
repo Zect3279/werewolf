@@ -31,6 +31,8 @@ class Roles():
 class Player():
     def __init__(self):
         self.yes = "no"
+        self.live = []
+        self.dead = []
 
 class Wolf():
     def __init__(self):

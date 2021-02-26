@@ -1,5 +1,7 @@
 import discord
-from discord.ext import commands
+from discord.ext import commands, tasks
+from discord_slash import SlashCommand, cog_ext, SlashContext
+from discord_slash.utils import manage_commands
 
 from os import environ
 import sys
@@ -13,7 +15,7 @@ bot = commands.Bot(
     intents=discord.Intents.all(),
 )
 bot.system = System()
-
+bot.slash = SlashCommand(bot, sync_commands=True)
 
 
 
@@ -21,7 +23,9 @@ extensions = [
     "cogs.game",
     "cogs.controll",
     "cogs.vc",
-    "roles.observe"
+    "roles.observe",
+    "slash.wolf",
+    "slash.fortun",
 ]
 for extension in extensions:
     bot.load_extension(extension)
