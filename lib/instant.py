@@ -11,11 +11,36 @@ class Instant():
     def __init__(self, bot: Any):
         self.bot = bot
 
-    async def dele(self,ctx):
+    async def all(self,ctx):
         all_role = ctx.guild.roles
         for rol in all_role:
             try:
                 await rol.delete()
+        except:
+            a = "a"
+
+        for chan in ctx.guild.channels:
+            await chan.delete()
+
+        await ctx.guild.create_text_channel("welcome")
+
+        category = await ctx.guild.create_category(name="総合")
+        await ctx.guild.create_role(name="全体チャット")
+        await category.create_text_channel("全体チャット")
+        voice = await category.create_voice_channel("全体チャット")
+        await voice.edit(user_limit=99)
+
+
+    async def dele(self,ctx):
+        all_role = ctx.guild.roles
+        for rol in all_role:
+            try:
+                if rol.name == "人狼参加者":
+                    await rol.delete()
+                if rol.name == "生存者":
+                    await rol.delete()
+                if rol.name == "死亡者":
+                    await rol.delete()
             except:
                 a = "a"
         channel = discord.utils.get(ctx.guild.voice_channels, name='移動用')
@@ -30,6 +55,7 @@ class Instant():
         for chan in channel.category.channels:
             await chan.delete()
         await channel.category.delete()
+
         channel = discord.utils.get(ctx.guild.text_channels, name='人狼')
         for chan in channel.category.channels:
             await chan.delete()

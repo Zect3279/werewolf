@@ -21,6 +21,10 @@ class Game(commands.Cog):
     async def on_ready(self):
         print("I am ready")
 
+    @commands.command()
+    async def delete(self,ctx):
+        print("delete")
+        await self.instant.all(ctx)
 
     @commands.command()
     async def make(self,ctx):
