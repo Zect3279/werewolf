@@ -15,6 +15,6 @@ class Set():
     async def roles(self):
         roles = self.bot.system.guild.roles
         self.bot.system.role.on = discord.utils.get(roles, name="人狼参加者")
-        self.bot.system.role.live = discord.utils.get(roles, name="生存者")
-        self.bot.system.role.dead = discord.utils.get(roles, name="死亡者")
+        self.bot.system.role.alive = discord.utils.get(roles, name="生存者")
+        self.bot.system.role.killed = discord.utils.get(roles, name="死亡者")
         self.bot.system.role.no = discord.utils.get(roles, name="観戦者")

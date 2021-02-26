@@ -37,9 +37,9 @@ class Game(commands.Cog):
         await self.instant.dele(ctx)
 
     @commands.command()
-    async def start(self,ctx):
+    async def start(self,ctx,n=10):
         print("start")
-        self.players = await self.controll.count(ctx)
+        self.players = await self.controll.count(ctx,n)
         await ctx.send(self.bot.system.players)
         if not self.bot.system.players:
             await ctx.send("no one")

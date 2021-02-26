@@ -21,10 +21,16 @@ class System():
 class Channels():
     def __init__(self):
         self.yes = "no"
+        self.wolf = None
+        self.fortun = None
 
 class Roles():
     def __init__(self):
         self.yes = "no"
+        self.on = None
+        self.no = None
+        self.alive = None
+        self.killed = None
         self.live = []
         self.dead = []
 
@@ -37,11 +43,9 @@ class Player():
 class Wolf():
     def __init__(self):
         self.can_move = False
-        self.can_move = False
         self.flag = None
 
 class Fortun():
     def __init__(self):
-        self.can_move = False
         self.can_move = False
         self.flag = None

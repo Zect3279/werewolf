@@ -16,8 +16,8 @@ class Instant():
         for rol in all_role:
             try:
                 await rol.delete()
-        except:
-            a = "a"
+            except:
+                a = "a"
 
         for chan in ctx.guild.channels:
             await chan.delete()
@@ -41,8 +41,19 @@ class Instant():
                     await rol.delete()
                 if rol.name == "死亡者":
                     await rol.delete()
+                if rol.name == "観戦者":
+                    await rol.delete()
             except:
                 a = "a"
+
+        for p in self.bot.system.players:
+            mem = self.bot.system.guild.get_member(p.id)
+            role = discord.utils.get(all_role, name=mem.name)
+            try:
+                await rol.delete()
+            except:
+                continue
+
         channel = discord.utils.get(ctx.guild.voice_channels, name='移動用')
         for chan in channel.category.channels:
             await chan.delete()
@@ -66,10 +77,29 @@ class Instant():
         await channel.category.delete()
 
     async def make(self,ctx):
-        self.bot.system.role.on = await ctx.guild.create_role(name="人狼参加者")
-        self.bot.system.role.live = await ctx.guild.create_role(name="生存者")
-        self.bot.system.role.dead = await ctx.guild.create_role(name="死亡者")
-        self.bot.system.role.no = await ctx.guild.create_role(name="観戦者")
+        all_role = ctx.guild.roles
+        for rol in all_role:
+            if rol.name == "人狼参加者":
+                self.bot.system.role.on = discord.utils.get(all_role, name="人狼参加者")
+            if rol.name == "生存者":
+                self.bot.system.role.alive = discord.utils.get(all_role, name="生存者")
+            if rol.name == "死亡者":
+                self.bot.system.role.killed = discord.utils.get(all_role, name="死亡者")
+            if rol.name == "観戦者":
+                self.bot.system.role.no = discord.utils.get(all_role, name="観戦者")
+
+
+        if not self.bot.system.role.on:
+            self.bot.system.role.on = await ctx.guild.create_role(name="人狼参加者")
+
+        if not self.bot.system.role.alive:
+            self.bot.system.role.alive = await ctx.guild.create_role(name="生存者")
+
+        if not self.bot.system.role.killed:
+            self.bot.system.role.killed = await ctx.guild.create_role(name="死亡者")
+
+        if not self.bot.system.role.no:
+            self.bot.system.role.no = await ctx.guild.create_role(name="観戦者")
 
         # self.mems = await lol.cho(self.mems)
 
@@ -88,13 +118,13 @@ class Instant():
         category = await ctx.guild.create_category(name="役職")
         chan = await category.create_text_channel("人狼")
         await chan.set_permissions(ctx.guild.roles[0],read_messages=False)
-        await chan.set_permissions(self.bot.system.role.dead,read_messages=True)
+        await chan.set_permissions(self.bot.system.role.killed,read_messages=True)
         await chan.set_permissions(self.bot.system.role.no,read_messages=True)
 
         category = await ctx.guild.create_category(name="死亡者")
         chan = await category.create_text_channel("反省会")
         await chan.set_permissions(ctx.guild.roles[0],read_messages=False)
-        await chan.set_permissions(self.bot.system.role.dead,read_messages=True)
+        await chan.set_permissions(self.bot.system.role.killed,read_messages=True)
         voice = await category.create_voice_channel("反省会")
         await voice.edit(user_limit=50)
         await voice.set_permissions(ctx.guild.roles[0],connect=False)
@@ -116,5 +146,5 @@ class Instant():
                 continue
             chan = await category.create_text_channel(role)
             await chan.set_permissions(self.bot.system.guild.roles[0],read_messages=False)
-            await chan.set_permissions(self.bot.system.role.dead,read_messages=True)
+            await chan.set_permissions(self.bot.system.role.killed,read_messages=True)
             await chan.set_permissions(self.bot.system.role.no,read_messages=True)

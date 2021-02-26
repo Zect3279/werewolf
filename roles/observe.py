@@ -47,16 +47,17 @@ class Werewolf(Observe):
             print("mem==none")
             return
         for p in self.bot.system.player.live:
-            # if p.id != mem.id:
-            #     print("p.id!=mem.id")
-            #     continue
+            if p.id != mem.id:
+                print("p.id!=mem.id")
+                continue
             self.bot.system.player.live.remove(p)
             self.bot.system.player.dead.append(p)
-        await mem.remove_roles(self.bot.system.role.live)
-        await mem.add_roles(self.bot.system.role.dead)
+        await mem.remove_roles(self.bot.system.role.alive)
+        await mem.add_roles(self.bot.system.role.killed)
         await self.bot.system.channel.wolf.send(f"<@{mem.id}> の殺害が完了しました。")
         chan = discord.utils.get(self.bot.system.guild.voice_channels, name="移動用")
         await mem.edit(voice_channel=chan)
+        return
 
 
 class Fortun(Observe):
@@ -83,14 +84,15 @@ class Fortun(Observe):
             print("mem==none")
             return
         for p in self.bot.system.player.live:
-            # if p.id != mem.id:
-            #     print("p.id!=mem.id")
-            #     continue
+            if p.id != mem.id:
+                print("p.id!=mem.id")
+                continue
             if p.role == "人狼":
                 bw = "黒"
             else:
                 bw = "白"
             await self.bot.system.channel.fortun.send(f"<@{mem.id}> は __{bw}__ です")
+        return
 
 
 def setup(bot):
