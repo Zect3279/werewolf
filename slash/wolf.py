@@ -22,22 +22,26 @@ class SlashWolf(commands.Cog):
             return
         await ctx.respond(eat=False) # eat=Falseでログを出す
 
-        member = role.members[0]
-        yes = 0
-        for p in self.bot.system.player.live:
-            if member.id == p.id:
-                yes += 1
-        if yes == 0:
-            txt = "誰も占いませんでした"
-        elif role.name == "人狼参加者":
-            txt = "誰も殺害しませんでした"
-        elif role.name == "死亡者":
-            txt = "誰も殺害しませんでした"
-        elif role.name == "観戦者":
-            txt = "誰も殺害しませんでした"
+        try:
+            member = role.members[0]
+        except IndexError:
+            txt = "誰も占いませんでした。"
         else:
-            txt = f"{member.mention} を殺害します"
-            self.bot.system.wolf.flag = member
+            yes = 0
+            for p in self.bot.system.player.live:
+                if member.id == p.id:
+                    yes += 1
+            if yes == 0:
+                txt = "誰も占いませんでした"
+            elif role.name == "人狼参加者":
+                txt = "誰も殺害しませんでした"
+            elif role.name == "死亡者":
+                txt = "誰も殺害しませんでした"
+            elif role.name == "観戦者":
+                txt = "誰も殺害しませんでした"
+            else:
+                txt = f"{member.mention} を殺害します"
+                self.bot.system.wolf.flag = member
 
         self.bot.system.wolf.can_move = False
         await ctx.send(content=txt, hidden=False) # hidden=Trueで実行した人のみにみえるように
