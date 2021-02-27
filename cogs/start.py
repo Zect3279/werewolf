@@ -81,9 +81,12 @@ class Start(commands.Cog):
 
 
     async def channel(self):
+        all_role = ctx.guild.roles
         for p in self.bot.system.players:
             mem = self.bot.system.guild.get_member(p.id)
-            role = await self.bot.system.guild.create_role(name=mem.name)
+            role = discord.utils.get(all_role, name=mem.name)
+            if not role:
+                role = await self.bot.system.guild.create_role(name=mem.name)
             if p.role == "市民":
                 await mem.add_roles(role)
                 continue
