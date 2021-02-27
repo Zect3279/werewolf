@@ -32,7 +32,7 @@ class Start(commands.Cog):
         self.bot.system.on = True
         await self.move()
         await self.set.channels()
-        await self.channel()
+        await self.channel(ctx)
         await self.every()
         await self.call()
         await self.ro_li()
@@ -80,7 +80,7 @@ class Start(commands.Cog):
             await mem.edit(voice_channel=chan)
 
 
-    async def channel(self):
+    async def channel(self,ctx):
         all_role = ctx.guild.roles
         for p in self.bot.system.players:
             mem = self.bot.system.guild.get_member(p.id)

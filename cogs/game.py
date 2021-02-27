@@ -24,21 +24,30 @@ class Game(commands.Cog):
     @commands.command()
     async def delete(self,ctx):
         print("delete")
-        await self.instant.all(ctx)
+        self.bot.system.__init__()
+        await self.instant.dele(ctx)
 
     @commands.command()
     async def make(self,ctx):
         print("make")
         await self.instant.make(ctx)
 
-    @commands.command()
-    async def reset(self,ctx):
-        print("reset")
-        await self.instant.dele(ctx)
+    # @commands.command()
+    # async def reset(self,ctx):
+    #     print("reset")
+    #     self.bot.system.__init__()
+    #     await self.instant.all(ctx)
 
     @commands.command()
     async def start(self,ctx,n=10):
         print("start")
+        self.bot.system.__init__()
+
+        channels = ctx.guild.text_channels
+        channel = discord.utils.get(channels, name="観戦")
+        if not channel:
+            print("make")
+            await self.instant.make(ctx)
         self.players = await self.controll.count(ctx,n)
         await ctx.send(self.bot.system.players)
         if not self.bot.system.players:
