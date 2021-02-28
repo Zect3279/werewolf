@@ -24,8 +24,8 @@ class Game(commands.Cog):
     @commands.command()
     async def delete(self,ctx):
         print("delete")
-        self.bot.system.__init__()
         await self.instant.dele(ctx)
+        self.bot.system.__init__()
 
     @commands.command()
     async def make(self,ctx):

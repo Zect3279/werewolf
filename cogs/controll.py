@@ -32,7 +32,7 @@ class Controll(commands.Cog):
         except:
             count = 10
 
-        await ctx.send("開始を確認...\n参加希望の方は、`/join` と入力してください。")
+        await ctx.send("開始を確認...\n参加希望の方は、`/join` と入力し、\nVC[総合チャット]に参加してください。")
         edit = await ctx.send(f"開始まで{count}秒")
         self.bot.system.status = "recruiting"
         for i in range(count):
