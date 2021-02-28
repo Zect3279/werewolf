@@ -46,7 +46,7 @@ class Instant():
             except:
                 a = "a"
 
-        for p in self.bot.system.player.all:
+        for p in self.bot.system.player.live:
             mem = self.bot.system.guild.get_member(p.id)
             print(mem)
             role = discord.utils.get(all_role, name=mem.name)
@@ -55,6 +55,13 @@ class Instant():
             # try:
             # except:
             #     continue
+
+        for p in self.bot.system.player.dead:
+            mem = self.bot.system.guild.get_member(p.id)
+            print(mem)
+            role = discord.utils.get(all_role, name=mem.name)
+            print(role)
+            await role.delete()
 
         channel = discord.utils.get(ctx.guild.voice_channels, name='移動用')
         for chan in channel.category.channels:
@@ -146,7 +153,10 @@ class Instant():
             role = p.role
             if role == "人狼":
                 continue
-            chan = await category.create_text_channel(role)
+
+            chan = discord.utils.get(self.bot.system.guild.text_channels, name=role)
+            if not chan:
+                chan = await category.create_text_channel(role)
             await chan.set_permissions(self.bot.system.guild.roles[0],read_messages=False)
             await chan.set_permissions(self.bot.system.role.killed,read_messages=True)
             await chan.set_permissions(self.bot.system.role.no,read_messages=True)
