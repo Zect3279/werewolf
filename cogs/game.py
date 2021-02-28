@@ -32,11 +32,11 @@ class Game(commands.Cog):
         print("make")
         await self.instant.make(ctx)
 
-    # @commands.command()
-    # async def reset(self,ctx):
-    #     print("reset")
-    #     self.bot.system.__init__()
-    #     await self.instant.all(ctx)
+    @commands.command()
+    async def reset(self,ctx):
+        print("reset")
+        self.bot.system.__init__()
+        # await self.instant.all(ctx)
 
     @commands.command()
     async def start(self,ctx,n=10):

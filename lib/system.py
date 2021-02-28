@@ -9,7 +9,6 @@ class System():
         self.status = "nothing"
         self.on = False
         self.move_wait = False
-        self.players = []
         self.guild = None
         self.channel = Channels()
         self.role = Roles()
@@ -37,6 +36,7 @@ class Roles():
 class Player():
     def __init__(self):
         self.yes = "no"
+        self.all = []
         self.live = []
         self.dead = []
 

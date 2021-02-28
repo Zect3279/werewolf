@@ -16,3 +16,15 @@ class Admin(commands.Cog):
     @commands.command()
     async def status(self,ctx):
         await ctx.send(self.bot.system.status)
+
+    @commands.command()
+    async def players(self,ctx):
+        await ctx.send(self.bot.system.players)
+
+    @commands.command()
+    async def guild(self,ctx):
+        await ctx.send(self.bot.system.guild)
+
+
+def setup(bot):
+    bot.add_cog(Admin(bot))

@@ -20,6 +20,7 @@ bot.slash = SlashCommand(bot, sync_commands=True)
 
 
 extensions = [
+    "cogs.admin",
     "cogs.game",
     "cogs.controll",
     "cogs.vc",

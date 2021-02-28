@@ -48,11 +48,13 @@ class Instant():
 
         for p in self.bot.system.players:
             mem = self.bot.system.guild.get_member(p.id)
+            print(mem)
             role = discord.utils.get(all_role, name=mem.name)
-            try:
-                await rol.delete()
-            except:
-                continue
+            print(role)
+            await role.delete()
+            # try:
+            # except:
+            #     continue
 
         channel = discord.utils.get(ctx.guild.voice_channels, name='移動用')
         for chan in channel.category.channels:
