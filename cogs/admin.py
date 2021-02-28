@@ -19,7 +19,15 @@ class Admin(commands.Cog):
 
     @commands.command()
     async def players(self,ctx):
-        await ctx.send(self.bot.system.players)
+        await ctx.send(self.bot.system.player.all)
+
+    @commands.command()
+    async def live(self,ctx):
+        await ctx.send(self.bot.system.player.live)
+
+    @commands.command()
+    async def dead(self,ctx):
+        await ctx.send(self.bot.system.player.dead)
 
     @commands.command()
     async def guild(self,ctx):
