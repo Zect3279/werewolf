@@ -34,4 +34,4 @@ class End():
         role = discord.utils.get(all_role, name=name)
         for mem in role.members:
             print(mem)
-            await member.remove_roles(role)
+            await mem.remove_roles(role)
