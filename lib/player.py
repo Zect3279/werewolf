@@ -35,7 +35,7 @@ class Players():
     def give_role(self,player_list):
         n = len(player_list)
         role = roles[n]
-        role_list = random.sample(role, n)
+        role_list = random.shuffle(role, n)
         for i, p in enumerate(player_list):
             p.role = role_list[i]
 
