@@ -36,7 +36,7 @@ class Game(commands.Cog):
     async def reset(self,ctx):
         print("reset")
         self.bot.system.__init__()
-        # await self.instant.all(ctx)
+        await self.instant.all(ctx)
 
     @commands.command()
     async def start(self,ctx,n=10):
