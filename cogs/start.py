@@ -26,9 +26,13 @@ class Start(commands.Cog):
         # self.whilling = Willing(bot)
 
 
-    async def deploy(self,ctx,players):
+    async def deploy(self,ctx):
         self.role_list = []
-        self.bot.system.player.all = self.player.make_data(players)
+        playerd = self.player.give_role(self.bot.system.player.all)
+        print(playerd)
+        self.bot.system.player.all = playerd
+        for p in self.bot.system.player.all:
+            print(p.id)
         self.bot.system.player.live = self.bot.system.player.all
         await self.set.roles()
         await self.instant.add()
@@ -68,13 +72,17 @@ class Start(commands.Cog):
 
     async def mo(self):
         print("move")
-        await self.wolf.move()
-        await self.fortun.move()
-        await self.end.finish()
+        await asyncio.gather(
+        self.wolf.move(),
+        self.fortun.move(),
+        )
+        # await self.end.finish()
+        print("finish")
         return
 
 
     async def move(self):
+        print(self.bot.system.player.all)
         for p in self.bot.system.player.all:
             mem = self.bot.system.guild.get_member(p.id)
             role = discord.utils.get(self.bot.system.guild.roles, name="生存者")

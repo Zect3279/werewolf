@@ -61,7 +61,7 @@ class Game(commands.Cog):
         #     txt += f"・{user.name}\n"
         # await ctx.send(f"{txt}```")
         self.bot.system.guild = ctx.guild
-        await self.starting.deploy(ctx,self.bot.system.player.all)
+        await self.starting.deploy(ctx)
 
 
 

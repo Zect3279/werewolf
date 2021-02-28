@@ -3,6 +3,8 @@ from discord.ext import commands
 
 import asyncio
 
+from lib.player import Player
+
 
 class Controll(commands.Cog):
     def __init__(self, bot):
@@ -17,7 +19,8 @@ class Controll(commands.Cog):
         if ctx.author in self.bot.system.player.all:
             return
         print(f"{ctx.author.name} join")
-        self.bot.system.player.all.append(ctx.author)
+        player = Player(ctx.author.id)
+        self.bot.system.player.all.append(player)
         role = discord.utils.get(ctx.guild.roles, name="人狼参加者")
         await ctx.author.add_roles(role)
         await ctx.message.add_reaction("⭕")
