@@ -14,10 +14,10 @@ class Controll(commands.Cog):
     async def join(self,ctx):
         if self.bot.system.status != "recruiting":
             return
-        if ctx.author in self.bot.system.players:
+        if ctx.author in self.bot.system.player.all:
             return
         print(f"{ctx.author.name} join")
-        self.bot.system.players.append(ctx.author)
+        self.bot.system.player.all.append(ctx.author)
         role = discord.utils.get(ctx.guild.roles, name="人狼参加者")
         await ctx.author.add_roles(role)
         await ctx.message.add_reaction("⭕")

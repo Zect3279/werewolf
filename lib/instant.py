@@ -46,7 +46,7 @@ class Instant():
             except:
                 a = "a"
 
-        for p in self.bot.system.players:
+        for p in self.bot.system.player.all:
             mem = self.bot.system.guild.get_member(p.id)
             print(mem)
             role = discord.utils.get(all_role, name=mem.name)
@@ -142,7 +142,7 @@ class Instant():
     async def add(self):
         channel = discord.utils.get(self.bot.system.guild.text_channels, name='人狼')
         category = channel.category
-        for p in self.bot.system.players:
+        for p in self.bot.system.player.all:
             role = p.role
             if role == "人狼":
                 continue

@@ -49,8 +49,8 @@ class Game(commands.Cog):
             print("make")
             await self.instant.make(ctx)
         self.players = await self.controll.count(ctx,n)
-        await ctx.send(self.bot.system.players)
-        if not self.bot.system.players:
+        await ctx.send(self.bot.system.player.all)
+        if not self.bot.system.player.all:
             await ctx.send("no one")
             return
         # if len(self.players) <= 3:
@@ -61,7 +61,7 @@ class Game(commands.Cog):
         #     txt += f"・{user.name}\n"
         # await ctx.send(f"{txt}```")
         self.bot.system.guild = ctx.guild
-        await self.starting.deploy(ctx,self.bot.system.players)
+        await self.starting.deploy(ctx,self.bot.system.player.all)
 
 
 

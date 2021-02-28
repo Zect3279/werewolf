@@ -11,7 +11,7 @@ class Observe(commands.Cog):
 
     async def box(self,chan,title):
         txt = "A. 誰も選択しない"
-        for i, p in enumerate(self.bot.system.players):
+        for i, p in enumerate(self.bot.system.player.all):
             txt += f"\n{self.count[i]}. <@{p.id}>"
 
         test = discord.Embed(title=title,colour=0x1e90ff)
@@ -19,7 +19,7 @@ class Observe(commands.Cog):
         msg = await chan.send(embed=test)
 
         await msg.add_reaction('🇦')
-        for i, p in enumerate(self.bot.system.players):
+        for i, p in enumerate(self.bot.system.player.all):
             await msg.add_reaction(self.ment[i])
 
 

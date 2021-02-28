@@ -25,8 +25,9 @@ class Start(commands.Cog):
 
 
     async def deploy(self,ctx,players):
-        self.bot.system.players = self.player.make_data(players)
-        self.bot.system.player.live = self.bot.system.players
+        self.role_list = []
+        self.bot.system.player.all = self.player.make_data(players)
+        self.bot.system.player.live = self.bot.system.player.all
         await self.set.roles()
         await self.instant.add()
         self.bot.system.on = True
@@ -72,7 +73,7 @@ class Start(commands.Cog):
 
 
     async def move(self):
-        for p in self.bot.system.players:
+        for p in self.bot.system.player.all:
             mem = self.bot.system.guild.get_member(p.id)
             role = discord.utils.get(self.bot.system.guild.roles, name="生存者")
             await mem.add_roles(role)
@@ -82,7 +83,7 @@ class Start(commands.Cog):
 
     async def channel(self,ctx):
         all_role = ctx.guild.roles
-        for p in self.bot.system.players:
+        for p in self.bot.system.player.all:
             mem = self.bot.system.guild.get_member(p.id)
             role = discord.utils.get(all_role, name=mem.name)
             if not role:
@@ -100,7 +101,7 @@ class Start(commands.Cog):
         await channel.send("@everyone\n全員に役職を付与しました。\nそれぞれの専用チャンネルにてメンションが飛びます。\n確認してください。\n（市民の方にはメンションは飛んでません）")
 
     async def call(self):
-        for p in self.bot.system.players:
+        for p in self.bot.system.player.all:
             if p.role == "市民":
                 continue
             channel = discord.utils.get(self.bot.system.guild.text_channels, name=p.role)
