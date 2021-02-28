@@ -5,6 +5,7 @@ import asyncio
 from lib.player import Players
 from lib.setting import Set
 from lib.instant import Instant
+from lib.end import End
 
 from roles.observe import Observe, Werewolf, Fortun
 # from roles.whiling import Willing
@@ -21,6 +22,7 @@ class Start(commands.Cog):
         self.observe = Observe(bot)
         self.wolf = Werewolf(bot)
         self.fortun = Fortun(bot)
+        self.end = End(bot)
         # self.whilling = Willing(bot)
 
 
@@ -68,7 +70,7 @@ class Start(commands.Cog):
         print("move")
         await self.wolf.move()
         await self.fortun.move()
-        print("Finish")
+        await self.end.finish()
         return
 
 
