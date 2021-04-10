@@ -1,7 +1,6 @@
-# start.py
+# game.py
 
 import discord
-from discord.ext import commands
 
 from typing import Any
 

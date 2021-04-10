@@ -1,10 +1,8 @@
 import discord
-from discord.ext import commands, tasks
-from discord_slash import SlashCommand, cog_ext, SlashContext
-from discord_slash.utils import manage_commands
+from discord.ext import commands
+from discord_slash import SlashCommand
 
 from os import environ
-import sys
 from lib.system import System
 
 bot = commands.Bot(

@@ -1,5 +1,3 @@
-import discord
-
 import random
 
 from lib.roles import roles

@@ -1,9 +1,6 @@
 import discord
-from discord.ext import commands, tasks
-from discord_slash import SlashCommand, cog_ext, SlashContext
-from discord_slash.utils import manage_commands
-
-import asyncio
+from discord.ext import commands
+from discord_slash import cog_ext, SlashContext
 
 
 class SlashWolf(commands.Cog):
