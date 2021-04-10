@@ -2,18 +2,18 @@ import discord
 from discord.ext import commands
 
 from cogs.joining import Joining
-from cogs.game import Start
+from cogs.game import Game
 
 from lib.instant import Instant
 
 
-class Game(commands.Cog):
+class Start(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.players = []
         self.instant = Instant(bot)
         self.joining = Joining(bot)
-        self.starting = Start(bot)
+        self.starting = Game(bot)
 
     @commands.Cog.listener()
     async def on_ready(self):
@@ -46,4 +46,4 @@ class Game(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Game(bot))
+    bot.add_cog(Start(bot))

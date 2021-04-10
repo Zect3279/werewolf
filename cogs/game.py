@@ -10,7 +10,7 @@ from lib.end import End
 from roles.observe import Observe, Werewolf, Fortun
 
 
-class Start(commands.Cog):
+class Game(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.role_list = []
