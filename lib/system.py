@@ -1,10 +1,11 @@
-class System():
+class System:
     """システム変数
     status(bool): 起動中の是非
     players(Players): プレイヤー一覧
     guild(discord.Guild): 実行鯖ID
 
     """
+
     def __init__(self):
         self.status = "nothing"
         self.on = False
@@ -17,13 +18,14 @@ class System():
         self.fortun = Fortun()
 
 
-class Channels():
+class Channels:
     def __init__(self):
         self.yes = "no"
         self.wolf = None
         self.fortun = None
 
-class Roles():
+
+class Roles:
     def __init__(self):
         self.yes = "no"
         self.on = None
@@ -33,19 +35,22 @@ class Roles():
         self.live = []
         self.dead = []
 
-class Player():
+
+class Player:
     def __init__(self):
         self.yes = "no"
         self.all = []
         self.live = []
         self.dead = []
 
-class Wolf():
+
+class Wolf:
     def __init__(self):
         self.can_move = False
         self.flag = None
 
-class Fortun():
+
+class Fortun:
     def __init__(self):
         self.can_move = False
         self.flag = None

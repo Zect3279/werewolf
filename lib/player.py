@@ -4,8 +4,9 @@ import random
 
 from lib.roles import roles
 
-class Player():
-    def __init__(self,user_id: int):
+
+class Player:
+    def __init__(self, user_id: int):
         self.id = user_id
         self.is_dead = False
         self.role = "市民"
@@ -17,7 +18,7 @@ class Player():
 
 # player = Player()
 
-class Players():
+class Players:
     """プレイヤー情報
     id(int): プレイヤーID
     is_dead (bool): 死亡しているか
@@ -47,7 +48,7 @@ class Players():
     #     player.fortune_target = None
     #     return player
 
-    def give_role(self,player_list):
+    def give_role(self, player_list):
         n = len(player_list)
         role = roles[n]
         print(role)

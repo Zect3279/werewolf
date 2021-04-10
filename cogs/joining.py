@@ -6,14 +6,12 @@ import asyncio
 from lib.player import Player
 
 
-class Controll(commands.Cog):
+class Joining(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-
-
     @commands.command()
-    async def join(self,ctx):
+    async def join(self, ctx):
         if self.bot.system.status != "recruiting":
             return
         if ctx.author in self.bot.system.player.all:
@@ -25,15 +23,8 @@ class Controll(commands.Cog):
         await ctx.author.add_roles(role)
         await ctx.message.add_reaction("⭕")
 
-
-
-
-    async def count(self,ctx,n):
+    async def count(self, ctx, count: int = 10):
         print("count")
-        try:
-            count = int(n)
-        except:
-            count = 10
 
         await ctx.send("開始を確認...\n参加希望の方は、`/join` と入力し、\nVC[総合チャット]に参加してください。")
         edit = await ctx.send(f"開始まで{count}秒")
@@ -46,8 +37,5 @@ class Controll(commands.Cog):
         await ctx.send("募集を終了しました。\n開始まで少々お待ちください。")
 
 
-
-
-
 def setup(bot):
-    bot.add_cog(Controll(bot))
+    bot.add_cog(Joining(bot))

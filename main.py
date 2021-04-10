@@ -7,8 +7,6 @@ from os import environ
 import sys
 from lib.system import System
 
-
-
 bot = commands.Bot(
     command_prefix=commands.when_mentioned_or(environ.get('PREFIX', '/')),
     help_command=None,
@@ -17,12 +15,10 @@ bot = commands.Bot(
 bot.system = System()
 bot.slash = SlashCommand(bot, sync_commands=True)
 
-
-
 extensions = [
     "cogs.admin",
     "cogs.game",
-    "cogs.controll",
+    "cogs.joining",
     "cogs.vc",
     "roles.observe",
     "slash.wolf",

@@ -8,8 +8,6 @@ from lib.instant import Instant
 from lib.end import End
 
 from roles.observe import Observe, Werewolf, Fortun
-# from roles.whiling import Willing
-
 
 
 class Start(commands.Cog):
@@ -23,14 +21,12 @@ class Start(commands.Cog):
         self.wolf = Werewolf(bot)
         self.fortun = Fortun(bot)
         self.end = End(bot)
-        # self.whilling = Willing(bot)
 
-
-    async def deploy(self,ctx):
+    async def deploy(self, ctx):
         self.role_list = []
-        playerd = self.player.give_role(self.bot.system.player.all)
-        print(playerd)
-        self.bot.system.player.all = playerd
+        players = self.player.give_role(self.bot.system.player.all)
+        print(players)
+        self.bot.system.player.all = players
         for p in self.bot.system.player.all:
             print(p.id)
         self.bot.system.player.live = self.bot.system.player.all
@@ -46,26 +42,26 @@ class Start(commands.Cog):
         role_list = self.role_list
         print("check")
         await asyncio.gather(
-        self.wolf.check(role_list),
-        self.fortun.check(role_list),
+            self.wolf.check(role_list),
+            self.fortun.check(role_list),
         )
         print("while")
         await self.Await()
 
     async def Await(self):
         await asyncio.sleep(1)
-        if self.bot.system.wolf.can_move == True:
+        if self.bot.system.wolf.can_move:
             await self.Bwait()
-        elif self.bot.system.fortun.can_move == True:
+        elif self.bot.system.fortun.can_move:
             await self.Bwait()
         else:
             await self.mo()
 
     async def Bwait(self):
         await asyncio.sleep(1)
-        if self.bot.system.wolf.can_move == True:
+        if self.bot.system.wolf.can_move:
             await self.Await()
-        elif self.bot.system.fortun.can_move == True:
+        elif self.bot.system.fortun.can_move:
             await self.Await()
         else:
             await self.mo()
@@ -73,13 +69,12 @@ class Start(commands.Cog):
     async def mo(self):
         print("move")
         await asyncio.gather(
-        self.wolf.move(),
-        self.fortun.move(),
+            self.wolf.move(),
+            self.fortun.move(),
         )
         # await self.end.finish()
         print("finish")
         return
-
 
     async def move(self):
         print(self.bot.system.player.all)
@@ -90,8 +85,7 @@ class Start(commands.Cog):
             chan = discord.utils.get(self.bot.system.guild.voice_channels, name="移動用")
             await mem.edit(voice_channel=chan)
 
-
-    async def channel(self,ctx):
+    async def channel(self, ctx):
         all_role = ctx.guild.roles
         for p in self.bot.system.player.all:
             mem = self.bot.system.guild.get_member(p.id)
@@ -102,9 +96,8 @@ class Start(commands.Cog):
                 await mem.add_roles(role)
                 continue
             chan = discord.utils.get(self.bot.system.guild.text_channels, name=p.role)
-            await chan.set_permissions(role,read_messages=True)
+            await chan.set_permissions(role, read_messages=True)
             await mem.add_roles(role)
-
 
     async def every(self):
         channel = discord.utils.get(self.bot.system.guild.text_channels, name="会議所")
