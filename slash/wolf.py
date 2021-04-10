@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from discord_slash import cog_ext, SlashContext
 
+from typing import Optional
+
 
 class SlashWolf(commands.Cog):
     def __init__(self, bot):
@@ -15,22 +17,28 @@ class SlashWolf(commands.Cog):
         description='殺害対象の指定　　role[discord.Role]: ロールメンション',
         guild_ids=[720566804094648330, 808283612105408533, 726233332655849514]
     )
-    async def slash_say(self, ctx: SlashContext, role: discord.Role):
+    async def slash_say(self, ctx: SlashContext, role: Optional[discord.Role]):
         if not self.bot.system.wolf.can_move:
             return
-        await ctx.respond(eat=False)  # eat=Falseでログを出す
 
         try:
             member = role.members[0]
         except IndexError:
             txt = "誰も占いませんでした。"
         else:
+            user_id = self.bot.get_user(ctx.author_id)
+            player = None
             yes = 0
             for p in self.bot.system.player.live:
+                if user_id == p.id:
+                    player = p
                 if member.id == p.id:
                     yes += 1
             if yes == 0:
                 txt = "誰も占いませんでした"
+            elif player:
+                if player.role != "人狼":
+                    txt = "誰も占いませんでした"
             elif role.name == "人狼参加者":
                 txt = "誰も殺害しませんでした"
             elif role.name == "死亡者":

@@ -19,7 +19,7 @@ class GameMaster(commands.Cog):
         self.night = Night(bot)
         self.noon = Noon(bot)
 
-    async def check(self, role_list):
+    async def start(self, role_list):
         # 勝敗判定
-        await self.night.start(self.role_list)
+        await self.night.start(role_list)
         await self.noon.start()

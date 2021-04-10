@@ -37,12 +37,13 @@ class Game(commands.Cog):
         await self.set.roles()
         await self.instant.add()
         self.bot.system.on = True
-        await self.move()
+        print("[VC]: ON")
         await self.set.channels()
         await self.channel(ctx)
+        await self.ro_li()
+        await self.move()
         await self.every()
         await self.call()
-        await self.ro_li()
         role_list = self.role_list
         await self.master.start(role_list)
         return
@@ -60,9 +61,11 @@ class Game(commands.Cog):
         all_role = ctx.guild.roles
         for p in self.bot.system.player.all:
             mem = self.bot.system.guild.get_member(p.id)
+            print(f"[{mem.name}]: {p.role}")
             role = discord.utils.get(all_role, name=mem.name)
-            if not role:
-                role = await self.bot.system.guild.create_role(name=mem.name)
+            if role:
+                await role.delete()
+            role = await self.bot.system.guild.create_role(name=mem.name)
             if p.role == "市民":
                 await mem.add_roles(role)
                 continue

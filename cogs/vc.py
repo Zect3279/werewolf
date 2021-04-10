@@ -8,20 +8,21 @@ class VC(commands.Cog):
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
+        print(f"[VC]: {member.name} を確認")
         if not self.bot.system.on:
             return
         if before.channel == after.channel:
             return
-        if before:
+        if before.channel:
             if before.channel.guild.id != 726233332655849514:
                 return
             cname = before.channel.name
-            if cname != "観戦中":
+            if cname == "観戦中":
+                role = discord.utils.get(before.channel.guild.roles, name="観戦者")
+                await member.remove_roles(role)
                 return
-            role = discord.utils.get(before.channel.guild.roles, name="観戦者")
-            await member.remove_roles(role)
-            return
-        if after:
+
+        if after.channel:
             if after.channel.guild.id != 726233332655849514:
                 return
             cname = after.channel.name

@@ -45,6 +45,20 @@ class Admin(commands.Cog):
         await ctx.send(self.bot.system.player.dead)
 
     @commands.command()
+    async def roles(self, ctx):
+        roles = []
+        for p in self.bot.system.player.live:
+            roles.append(p.role)
+        await ctx.send(roles)
+
+    @commands.command()
+    async def role(self, ctx):
+        for p in self.bot.system.player.live:
+            if ctx.author.id == p.id:
+                player = p
+        await ctx.send(player.role)
+
+    @commands.command()
     async def guild(self, ctx):
         await ctx.send(self.bot.system.guild)
 
