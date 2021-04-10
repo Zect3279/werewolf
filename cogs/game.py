@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands
 import asyncio
 
+from cogs.master import GameMaster
 from cogs.night import Night
 
 from lib.player import Players
@@ -23,7 +24,7 @@ class Game(commands.Cog):
         self.wolf = Werewolf(bot)
         self.fortun = Fortun(bot)
         self.end = End(bot)
-        self.night = Night(bot)
+        self.master = GameMaster(bot)
 
     async def deploy(self, ctx):
         self.role_list = []
@@ -43,7 +44,7 @@ class Game(commands.Cog):
         await self.call()
         await self.ro_li()
         role_list = self.role_list
-        await self.night.start(role_list)
+        await self.master.start(role_list)
         return
 
     async def move(self):
