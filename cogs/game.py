@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import asyncio
 
+from cogs.night import Night
+
 from lib.player import Players
 from lib.setting import Set
 from lib.instant import Instant
@@ -21,6 +23,7 @@ class Game(commands.Cog):
         self.wolf = Werewolf(bot)
         self.fortun = Fortun(bot)
         self.end = End(bot)
+        self.night = Night(bot)
 
     async def deploy(self, ctx):
         self.role_list = []
@@ -40,40 +43,7 @@ class Game(commands.Cog):
         await self.call()
         await self.ro_li()
         role_list = self.role_list
-        print("check")
-        await asyncio.gather(
-            self.wolf.check(role_list),
-            self.fortun.check(role_list),
-        )
-        print("while")
-        await self.Await()
-
-    async def Await(self):
-        await asyncio.sleep(1)
-        if self.bot.system.wolf.can_move:
-            await self.Bwait()
-        elif self.bot.system.fortun.can_move:
-            await self.Bwait()
-        else:
-            await self.mo()
-
-    async def Bwait(self):
-        await asyncio.sleep(1)
-        if self.bot.system.wolf.can_move:
-            await self.Await()
-        elif self.bot.system.fortun.can_move:
-            await self.Await()
-        else:
-            await self.mo()
-
-    async def mo(self):
-        print("move")
-        await asyncio.gather(
-            self.wolf.move(),
-            self.fortun.move(),
-        )
-        # await self.end.finish()
-        print("finish")
+        await self.night.start(role_list)
         return
 
     async def move(self):
