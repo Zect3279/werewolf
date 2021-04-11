@@ -16,6 +16,7 @@ class System:
         self.player = Player()
         self.wolf = Wolf()
         self.fortun = Fortun()
+        self.vote = {}
 
 
 class Channels:

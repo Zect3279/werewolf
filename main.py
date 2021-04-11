@@ -21,6 +21,7 @@ extensions = [
     "roles.observe",
     "slash.wolf",
     "slash.fortun",
+    "slash.vote",
 ]
 for extension in extensions:
     bot.load_extension(extension)
