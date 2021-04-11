@@ -1,5 +1,14 @@
 # werewolf
 sas08/wolfが汚かったから、書き換えた
+**完成した**
+
+## コマンド
+- `/start` => ゲーム開始
+- `/join` => ゲームへの参加
+- `/vote <@role[discord.Role]>` => 追放者への投票
+- `/raid <@role[discord.Role]>` => 殺害者を指定（人狼専用コマンド）
+- `/fortun <@role[discord.Role]>`=> 占い対象を指定（占い師専用コマンド）
+
 
 ## TODO
 - [x] 完成
