@@ -73,7 +73,7 @@ class Game(commands.Cog):
 
     async def every(self):
         channel = discord.utils.get(self.bot.system.guild.text_channels, name="会議所")
-        await channel.send("@everyone\n全員に役職を付与しました。\nそれぞれの専用チャンネルにてメンションが飛びます。\n確認してください。\n（市民の方にはメンションは飛んでません）")
+        await channel.send("@everyone\n全員に役職を付与しました。\nそれぞれの専用チャンネルにてメンションが飛びます。\n確認してください。")
 
     async def call(self):
         for p in self.bot.system.player.all:
