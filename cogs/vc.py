@@ -8,13 +8,14 @@ class VC(commands.Cog):
 
     @commands.Cog.listener()
     async def on_voice_state_update(self, member, before, after):
+        GUILD = 720566804094648330
         print(f"[VC]: {member.name} を確認")
         if not self.bot.system.on:
             return
         if before.channel == after.channel:
             return
         if before.channel:
-            if before.channel.guild.id != 726233332655849514:
+            if before.channel.guild.id != GUILD:
                 return
             cname = before.channel.name
             if cname == "観戦中":
@@ -23,10 +24,10 @@ class VC(commands.Cog):
                 return
 
         if after.channel:
-            if after.channel.guild.id != 726233332655849514:
+            if after.channel.guild.id != GUILD:
                 return
             cname = after.channel.name
-            if cname != "移動用":
+            if not cname.startswith("移動用"):
                 return
             role = discord.utils.get(after.channel.guild.roles, name="生存者")
             if role in member.roles:

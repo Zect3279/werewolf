@@ -40,12 +40,10 @@ class Game(commands.Cog):
         print("[VC]: ON")
         await self.set.channels()
         await self.channel(ctx)
-        await self.ro_li()
         await self.move()
         await self.every()
         await self.call()
-        role_list = self.role_list
-        await self.master.start(role_list)
+        await self.master.start()
         return
 
     async def move(self):
@@ -83,8 +81,3 @@ class Game(commands.Cog):
                 continue
             channel = discord.utils.get(self.bot.system.guild.text_channels, name=p.role)
             await channel.send(f"<@{p.id}> あなたは、 __{p.role}__ です。")
-
-    async def ro_li(self):
-        for p in self.bot.system.player.live:
-            self.role_list.append(p.role)
-        print(self.role_list)

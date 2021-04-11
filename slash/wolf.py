@@ -19,6 +19,7 @@ class SlashWolf(commands.Cog):
     )
     async def slash_say(self, ctx: SlashContext, role: Optional[discord.Role]):
         if not self.bot.system.wolf.can_move:
+            await ctx.send("実行に失敗しました。")
             return
 
         try:
@@ -26,7 +27,7 @@ class SlashWolf(commands.Cog):
         except IndexError:
             txt = "誰も占いませんでした。"
         else:
-            user_id = self.bot.get_user(ctx.author_id)
+            user_id = ctx.author_id
             player = None
             yes = 0
             for p in self.bot.system.player.live:
@@ -34,11 +35,12 @@ class SlashWolf(commands.Cog):
                     player = p
                 if member.id == p.id:
                     yes += 1
+            if player:
+                if player.role != "人狼":
+                    await ctx.send("あなたは人狼ではありません。")
+                    return
             if yes == 0:
                 txt = "誰も占いませんでした"
-            elif player:
-                if player.role != "人狼":
-                    txt = "誰も占いませんでした"
             elif role.name == "人狼参加者":
                 txt = "誰も殺害しませんでした"
             elif role.name == "死亡者":
@@ -48,8 +50,8 @@ class SlashWolf(commands.Cog):
             else:
                 txt = f"{member.mention} を殺害します"
                 self.bot.system.wolf.flag = member
+                self.bot.system.wolf.can_move = False
 
-        self.bot.system.wolf.can_move = False
         await ctx.send(content=txt, hidden=False)  # hidden=Trueで実行した人のみにみえるように
 
     def cog_unload(self):

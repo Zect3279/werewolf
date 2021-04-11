@@ -15,6 +15,7 @@ class Night(commands.Cog):
 
     async def start(self, role_list):
         print("[START]: night")
+        self.bot.system.status = "night"
         chan = discord.utils.get(self.bot.system.guild.text_channels, name="会議所")
         await chan.send("夜が開始しました。\nプレイヤーはそれぞれの行動を完了してください。")
         print("check")
@@ -44,11 +45,13 @@ class Night(commands.Cog):
             await self.mo()
 
     async def mo(self):
+        chan = discord.utils.get(self.bot.system.guild.text_channels, name="会議所")
         print("move")
         await asyncio.gather(
             self.wolf.move(),
             self.fortun.move(),
         )
-        # await self.end.finish()
         print("[END]: night")
+        await chan.send("夜が終了しました。")
+        await asyncio.sleep(0.5)
 

